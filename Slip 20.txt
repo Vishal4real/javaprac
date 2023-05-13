@@ -1,0 +1,92 @@
+Q1.
+//html
+<html>
+<body>
+<form method=get action="NumberWord.jsp">
+Enter Any Number : <input type=text name=num><br><br>
+<input type=submit value="Display">
+</form>
+<body>
+</html>
+NumberWord.jsp
+<html>
+<body>
+<font color=red>
+<%! int i,n;
+String s1;
+%>
+<% s1=request.getParameter("num");
+n=s1.length();
+i=0;
+do
+{
+char ch=s1.charAt(i);
+switch(ch)
+{
+case '0': out.println("Zero ");break;
+case '1': out.println("One ");break;
+case '2': out.println("Two ");break;
+case '3': out.println("Three ");break;
+case '4': out.println("Four ");break;
+case '5': out.println("Five ");break;
+case '6': out.println("Six ");break;
+case '7': out.println("Seven ");break;
+case '8': out.println("Eight ");break;
+case '9': out.println("Nine ");break;
+}
+i++;
+}while(i<n);
+%>
+</font>
+</body>
+</html>
+
+Q2.
+import java.awt.*;
+import javax.swing.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+class Slip20_2 extends JFrame implements Runnable
+{
+        private JLabel L1;
+        private boolean isVisible=false;
+        public Slip20_2()
+        {
+                setLayout(new FlowLayout());
+                ImageIcon ic=new ImageIcon("");
+                L1=new JLabel(ic);
+                add(L1);
+                setTitle("Blink image");
+                setSize(500,500);
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setVisible(true);
+                Thread t1=new Thread(this);
+                t1.start();
+                }
+                public void run()
+                {
+                try
+                {
+                        while(true)
+                        {
+                                if(isVisible)
+                        {
+                                L1.setVisible(false);
+                        }
+                        else
+                        {
+                                L1.setVisible(true);
+                        }
+                        isVisible=!isVisible;
+                        Thread.sleep(500);
+                        }
+                        }catch(Exception e)
+                        {
+                        System.out.println("Exception"+e);
+                        }
+                }
+                public static void main(String args[])
+                {
+                        new Slip20_2();
+                }
+}

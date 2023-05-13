@@ -1,0 +1,93 @@
+Q1.
+import java.sql.*;
+import java.io.*;
+class DBMetadata
+{
+	public static void main(String args[])
+	{
+		int no;
+		try
+		{
+			Class.forName("org.postgresql.Driver");
+			Connection con =DriverManager.getConnection("jdbc:postgresql://localhost:5432/testdb1","postgres","123");
+			DatabaseMetaData md=con.getMetaData();
+			System.out.println("	DatabaseMetaData information	");
+			System.out.println("====================================");
+			System.out.println("  - Product Name	:"+md.getDatabaseProductName());
+			System.out.println("  - Driver Version Name	:"+md.getDriverVersion());
+			System.out.println("  - Product Version Number	:"+md.getDatabaseProductVersion());
+			
+			System.out.println("  - Driver Name		:"+md.getDriverName());
+			System.out.println("  - UserName		:"+md.getUserName());
+			System.out.println("  - DriverVersionMinor		:"+md.getDriverMinorVersion());
+			ResultSet resultSet=md.getColumns(null, null, "student", null);
+			while(resultSet.next())
+			{	
+				String name=resultSet.getString("COLUMN NAME");
+				String type=resultSet.getString("TYPE_NAME");
+				int size =resultSet.getInt("COLUMN_SIZE");
+
+				System.out.println("Column Name: [" + name + "]; type: [" + type + "]; size : [" + size +"]");
+			}
+		ResultSet resultset1 =md.getTables(null,null,null,new String[]{"TABLE"});
+		while(resultset1.next())
+		{
+			String tname=resultset1.getString("TABLE_NAME");
+			System.out.println("Table"+tname);
+		}
+		}
+	
+		catch(Exception e)
+		{
+			System.out.println("ERROR:  "+e);	
+		}
+	}
+}
+				
+
+
+Q2.
+import java.util.Random;
+
+public class Slip13_2 implements Runnable
+{
+        private String t_name;
+        private int sleep_Time;
+        public Slip13_2(String name)
+        {
+                t_name=name;
+                Random rand=new Random();
+                sleep_Time=rand.nextInt(5000);
+        }
+        public void run()
+        {
+        System.out.println(t_name+"created.\n");
+        try
+        {
+                Thread.sleep(sleep_Time);
+                System.out.println(t_name+"Sleeps for"+sleep_Time+"milliseconds.\n");
+        }
+        catch(Exception e)
+        {
+                System.out.println("Exception:" +e);
+        }
+        System.out.println(t_name+"dead.");
+}
+public static void main(String args[])
+{
+        Thread t1=new Thread(new Slip13_2("Roodraksha"));
+        Thread t2=new Thread(new Slip13_2("Nisal"));
+        t1.start();
+        t2.start();
+        try
+        {
+        t1.join();
+        t2.join();
+        }
+        catch(Exception e)
+        {
+                System.out.println("Exception:" +e);
+        }
+        System.out.println("Main Thread finish Successfully");
+        }
+}

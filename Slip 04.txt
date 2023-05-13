@@ -1,0 +1,74 @@
+Q1.
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+class Slip4_1 extends JFrame implements Runnable
+{
+        Thread t;
+        JLabel l1;
+        int flag;
+        Slip4_1()
+        {
+                t=new Thread(this);
+                t.start();
+                setLayout(null);
+                l1=new JLabel("This is Multithreading");
+                l1.setBounds(100,100,150,40);
+                add(l1);
+                setSize(300,300);
+                setVisible(true);
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                flag=0;
+                }
+                        public void run()
+                        {
+                        try
+                        {
+                        if(flag==0)
+                        {
+                        t.sleep(20);
+                        l1.setText("");
+                        flag=1;
+                        }
+                        if(flag==1)
+                        {
+                        t.sleep(20);
+                        l1.setText("This is Multithreading");
+                        flag=0;
+                        }
+                        }
+                        catch(Exception e)
+                        {
+                        System.out.println(e);
+                        }run();
+                        }
+                        public static void main(String args[])
+                        {
+                        new Slip4_1();
+                        }
+                        }
+
+Q2.
+import java.io.*;
+import java.util.*;
+class Q4S1{
+public static void main(String args[])throws IOException{
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+System.out.println("How Many Elements");
+int n = Integer.parseInt(br.readLine());
+HashMap hmap = new HashMap();
+for(int i=0; i<n; i++)
+{
+System.out.println("Enter City name");
+String mobile = br.readLine();
+System.out.println("Enter STD code");
+String name = br.readLine();
+hmap.put(mobile,name);
+}
+System.out.println("Before Sorting:"+hmap);
+System.out.println("Inserting Element:"+hmap.put("Pune",411000));
+System.out.println(hmap);
+System.out.println("Removing Element:"+hmap.remove("Pune",411000));
+System.out.println(hmap);
+}
+}

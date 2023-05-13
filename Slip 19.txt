@@ -1,0 +1,29 @@
+Q1.
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class NegativeIntegersLinkedList {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of integers to input: ");
+        int n = scanner.nextInt();
+
+        LinkedList<Integer> list = new LinkedList<>();
+
+        for (int i = 1; i <= n; i++) {
+            System.out.print("Enter integer " + i + ": ");
+            int num = scanner.nextInt();
+            list.add(num);
+        }
+
+        System.out.print("Negative integers: ");
+        for (int num : list) {
+            if (num < 0) {
+                System.out.print(num + " ");
+            }
+        }
+    }
+}
+
+Q2.

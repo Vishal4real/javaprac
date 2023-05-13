@@ -1,0 +1,87 @@
+Q1.
+import java.util.*;
+class Square implements Runnable{
+int a;
+public Square(int x){ a=x;}
+public void run(){
+System.out.println("Square:"+(a*a));
+}
+}
+class Cube implements Runnable{
+int a;
+public Cube(int x){ a=x;}
+public void run(){
+System.out.println("Cube:"+(a*a*a));
+}
+}
+class Slip implements Runnable{
+Square s;
+Cube c;
+public void run(){
+for(int i=0;i<5;i++){
+try{
+Thread.sleep(100);
+Random r = new Random();
+int n = r.nextInt(100);
+System.out.println("Number:"+n);
+if(n%2==0){
+s= new Square(n);
+Thread even = new Thread(s);
+even.start();
+}
+else
+{
+c = new Cube(n);
+Thread odd = new Thread(c);
+odd.start();
+}
+}
+catch(Exception e){}
+}
+}
+}
+class Slip2 {
+public static void main(String args[]){
+Thread t = new Thread(new Slip());
+t.start();
+}
+}
+Q2.
+import java.sql.*;
+import java.util.*;
+public class JDBC_Slip7
+{
+	public static void main(String []args)
+	{
+		Scanner s=new Scanner(System.in);
+		try{
+		Class.forName("org.postgresql.Driver");
+		Connection con=DriverManager.getConnection("jdbc:postgresql://localhost:5432/db1","postgres","123");
+		System.out.println("Enter How Many records you want to insert: ");
+		int n=s.nextInt();
+		for(int i=0;i<n;i++)
+		{
+			System.out.println("Enter the product" +(i+1)+ "details");
+			System.out.println("Enter Product id:");
+			int pno=s.nextInt();
+			System.out.println("Enter Product Name:");
+			String name=s.next();
+			System.out.println("Enter Product Price:");
+			int pr=s.nextInt();	
+			
+			PreparedStatement ps=con.prepareStatement("insert into product values(?,?,?)");
+			ps.setInt(1,pno);
+			ps.setString(2,name);
+			ps.setInt(3,pr);
+			ps.executeUpdate();
+		}
+		Statement t=con.createStatement();
+		ResultSet rs=t.executeQuery("select * from product");
+		System.out.println("Produt Number	Product Name	Product Price");
+		while(rs.next())
+		System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3));
+		}
+		catch(Exception e){System.out.println(e);}
+	}
+}
+			

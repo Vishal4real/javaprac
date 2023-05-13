@@ -1,0 +1,84 @@
+Q1.
+import java.util.*;
+import java.io.*;
+public class SetB1Collection
+{
+	public static void main(String args[])throws IOException
+	{
+		int n;
+		HashSet hs=new HashSet();
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Enter no of elements: ");
+		n=Integer.parseInt(br.readLine());	
+		System.out.print("Enter the nos: ");
+		for(int i=0;i<n;i++)
+		{
+			int a=Integer.parseInt(br.readLine());
+			hs.add(a);
+		}
+		System.out.println("The Elements are: "+hs);
+		TreeSet ts=new TreeSet(hs);
+		Iterator it=ts.iterator();
+		System.out.println("The Sorted Data ");
+		while(it.hasNext())
+		System.out.println(it.next());
+	}
+}
+		
+
+
+Q2.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Slip17_2 extends JFrame implements ActionListener
+{
+	JButton b1,b2;
+	JTextField t1;
+	Container c;
+	Slip17_2()
+	{
+		setVisible(true);
+		setSize(800,800);
+		c=getContentPane();
+		setLayout(null);
+		t1=new JTextField(500);
+		c.add(t1);
+		t1.setBounds(10,10,1000,30);
+		b1=new JButton("Start");
+		c.add(b1);
+		b1.setBounds(20,50,100,50);
+		b1.addActionListener(this);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource()==b1)
+		{
+			new Mythread();
+		}
+	}
+	class Mythread extends Thread
+	{
+		Mythread()
+		{
+			start();
+		}
+		public void run()
+		{
+			for(int i=1;i<=100;i++)
+			{
+				try{
+				   Thread.sleep(1000);
+			}
+				catch(InterruptedException e){
+				}
+			t1.setText(t1.getText()+""+i+"\n");
+		}
+	}
+	}
+	public static void main(String args[])
+	{
+		new Slip17_2().show();
+	}
+}

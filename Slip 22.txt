@@ -1,0 +1,101 @@
+Q1.
+import java.sql.*;
+import java.util.*;
+public class Slip22_1
+{
+	public static void main(String[] args)
+	{
+		Connection con;
+		ResultSet rs;
+		Statement t;
+		PreparedStatement ps;
+		Scanner s=new Scanner(System.in);
+		try{
+			Class.forName("org.postgresql.Driver");
+			System.out.println("Driver Loaded");
+			con= DriverManager.getConnection("jdbc:postgresql://localhost:5432/db1","postgres","123");
+			do
+			{
+				System.out.println("1.Insert\n2.Update\n3.Display\n4.Exit");
+				System.out.println("Enter Choice: ");
+				int ch=s.nextInt();
+				switch(ch)
+				{
+					case 1:
+						System.out.println("Enter Employee Number: ");
+						int eno=s.nextInt();
+						System.out.println("Enter Employee Name: ");
+						String ename=s.next();
+						System.out.println("Enter Employee Salary: ");
+						int sal=s.nextInt();
+						ps=con.prepareStatement("insert into emp values(?,?,?)");
+						ps.setInt(1,eno);
+						ps.setString(2,ename);		
+						ps.setInt(3,sal);
+						ps.executeUpdate();
+					break;
+					case 2:
+						System.out.println("Enter Employee Number to update record: ");
+						int eno1=s.nextInt();
+						System.out.println("Enter Employee Name: ");
+						String ename1=s.next();
+						System.out.println("Enter Employee Salary: ");
+						int sal1=s.nextInt();
+						ps=con.prepareStatement("update emp set ename=?,salary=? where empid=?");
+						ps.setInt(3,eno1);
+						ps.setString(1,ename1);		
+						ps.setInt(2,sal1);
+						ps.executeUpdate();
+					break;
+					case 3:
+						t=con.createStatement();
+						rs=t.executeQuery("select * from emp");
+						System.out.println("Employee Number\t Employee Name\t Salary");
+						while(rs.next())
+						{
+							System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3));
+						}
+					break;	
+					case 4:
+						System.exit(0);
+					break;
+				}
+			}while(true);
+				}
+			catch(Exception e){System.out.println(e);}	
+			}
+}
+
+				
+Q.2
+JSP File:
+<html>
+<body>
+<%
+String name=request.getParameter("username");
+java.util.Date d=new java.util.Date();
+int hr=d.getHours();
+if(hr<12)
+{
+out.println("Good Morning:"+name);
+}
+if(hr>12 && hr<16)
+{
+out.println("Good Afternoon:"+name);
+}
+if(hr>16)
+{
+out.println("Good Evening:"+name);
+}
+%>
+</body>
+</html>
+HTML File:
+<html>
+<body>
+<form action="wishuser.jsp" method="post">
+<input type="text" name="username">
+<input type="submit">
+</form>
+</body>
+</html>

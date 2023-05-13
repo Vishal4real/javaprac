@@ -1,0 +1,97 @@
+Q1.
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<form action="Slip29.jsp" method="post">
+Name : <input type="text" name="name">
+Age : <input type="text" name="age">
+<input type="submit" value="Check">
+</form>
+</body>
+</html>
+JSP FILE:
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%
+String name = request.getParameter("name");
+int age = Integer.parseInt(request.getParameter("age"));
+if(age >=18)
+{
+out.println(name + "\nAllowed to vote");
+}
+else
+{
+out.println(name + "\nNot allowed to vote");
+}
+%>
+Q2.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+public class Slip_25_2 extends JFrame implements ActionListener
+{
+        JLabel l1;
+        JButton create,alter,drop;
+	JTextField t1;
+	PreparedStatement ps;
+	Connection con;
+	ResultSet rs;
+	public Slip_25_2()
+	{
+		l1=new JLabel("Type your DDL Query here: ");
+		create=new JButton("Create Table");
+		alter=new JButton("Alter Table");
+		drop=new JButton("Drop Table");
+		t1=new JTextField(30);
+		setLayout(new FlowLayout());
+		add(l1);add(t1);
+		add(create);add(alter);add(drop);
+		create.addActionListener(this);
+		alter.addActionListener(this);
+		drop.addActionListener(this);
+		try
+		{
+			Class.forName("org.postgresql.Driver");
+			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db1","postgres","123");
+		}
+		catch(Exception e){System.out.println(e);}
+		this.setTitle("DDL Queries");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(340,350);
+		this.setVisible(true);
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		String qr=t1.getText();
+		try{
+			Statement st=con.createStatement();
+			if(ae.getSource()==create)
+			{
+				boolean r=st.execute(qr);
+				System.out.println("Table Created Successfully");
+			}
+			if(ae.getSource()==alter)
+			{
+				boolean r=st.execute(qr);
+				System.out.println("Table Altered Successfully");
+			}	
+			if(ae.getSource()==drop)
+			{
+				boolean r=st.execute(qr);
+				System.out.println("Table Dropped Successfully");
+			}
+	}
+	catch(Exception e)
+	{
+		System.out.println(e);
+	}
+	}
+	public static void main(String[] args)
+	{
+		new Slip_25_2();
+	}
+}

@@ -1,0 +1,50 @@
+Q1.
+import java.io.*;
+public class vowel {
+public static void main(String[] args){
+int count = 0;
+try{
+String str = "GeeksForGeeks";
+str = str.toLowerCase();
+for (int i = 0; i < str.length(); i++) {
+// check if char[i] is vowel
+if (str.charAt(i) == 'a' || str.charAt(i) == 'e'
+|| str.charAt(i) == 'i'
+|| str.charAt(i) == 'o'
+|| str.charAt(i) == 'u') {
+// count increments if there is vowel in
+// char[i]
+Thread.sleep(2000);
+count++;
+}
+}
+}
+catch(Exception e){}
+// display total count of vowels in string
+System.out.println(
+"Total no of vowels in string are: " +count);
+}
+}
+
+Q2.
+import java.io.*;
+import java.util.*;
+class Q4S1{
+public static void main(String args[])throws IOException{
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+System.out.println("Enter the Number o Subject");
+int n = Integer.parseInt(args[0]);
+LinkedList ar = new LinkedList();
+for(int i=0; i<n; i++)
+{
+System.out.println("Enter Sub");
+String a = br.readLine();
+ar.add(a);
+}
+System.out.println("Linked List:"+ar);
+ListIterator lt = ar.listIterator();
+while(lt.hasNext()){
+System.out.println(lt.next());
+}
+}
+}

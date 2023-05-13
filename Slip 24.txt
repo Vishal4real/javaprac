@@ -1,0 +1,99 @@
+Q1.
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+/*<APPLET CODE=ScrollingText.class WIDTH=400 HEIGHT=200 > </APPLET> */
+public class ScrollingText extends Applet implements Runnable
+{
+String msg="Welcome to Java Programming Language ....... ";
+Thread t=null;
+public void init()
+{
+setBackground(Color.cyan);
+setForeground(Color.red);
+t=new Thread(this);
+t.start();
+}
+public void run()
+{
+char ch;
+for(; ;)
+{
+try
+{
+repaint();
+Thread.sleep(400);
+ch=msg.charAt(0);
+msg=msg.substring(1,msg.length());
+msg+=ch;
+}
+catch(InterruptedException e)
+{}
+}
+}
+public void paint(Graphics g)
+{
+g.drawString(msg,10,10);
+}
+public static void main(String args[]){
+new ScrollingText();
+}
+}
+
+Q2.
+Index.html
+<html>
+<head>
+<title>Login Page</title>
+</head>
+<body>
+<form action="checkdetails.jsp">
+<legend>Enter User Id and Password...!!!</legend>
+UserId: <input type="text" name="id" /> <br><br>
+Password: <input type="text" name="pass" /> <br><br>
+<input type="submit" value="Sign In!!"/>
+</div>
+</form>
+</body>
+</html>
+Checkdetails.jsp
+<html>
+<head>
+<title>Check Credentials</title>
+</head>
+<body>
+<%
+String uid=request.getParameter("id");
+String password=request.getParameter("pass");
+session.setAttribute("session-uid", uid);
+if(uid.equals("Sofiya") && password.equals("Shaikh"))
+{
+response.sendRedirect("success.jsp");
+}
+else
+{
+response.sendRedirect("failed.jsp");
+}
+%>
+</body>
+</html>
+Success.jsp
+<html>
+<head><title>Success Page</title></head>
+<body>
+<%
+String data=(String)session.getAttribute("session-uid");
+out.println(" Login Successfully...!!!");
+%>
+</body>
+</html>
+Failed.jsp
+<html>
+<head><title>Sign-in Failed Page</title></head>
+<body>
+<%
+String data2=(String)session.getAttribute("session-uid");
+out.println(" User Id and Password are wrong. Please try Again.");
+%>
+</body>
+</html>

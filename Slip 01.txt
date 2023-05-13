@@ -1,0 +1,96 @@
+Q1.
+public class Slip1_1 extends Thread
+{
+        char ch;
+        public void run()
+        {
+                for(ch='A';ch<='Z';ch++)
+                {
+                System.out.println(ch+"");
+                try
+                        {
+                        Thread.sleep(2000);
+                        }
+                        catch(Exception e){}
+                        }
+                 }
+        
+        public static void main(String args[])
+        {
+                Slip1_1 t=new Slip1_1();
+                t.start();
+        }
+        }
+
+Q2.
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+class Slip1_2_JDBC extends JFrame implements ActionListener
+{
+	JLabel l1,l2,l3,l4;
+	JTextField t1,t2,t3,t4;
+	JButton btnAdd;
+	Connection con=null;
+	ResultSet rs=null;
+	Slip1_2_JDBC()
+	{
+		l1=new JLabel("Employee No:");
+		l2=new JLabel("Emplyoee Name:");
+		l3=new JLabel("Emplyoee Designation:");
+		l4=new JLabel("Emplyoee Salary:");
+		t1=new JTextField();
+		t2=new JTextField();
+		t3=new JTextField();
+		t4=new JTextField();
+		btnAdd=new JButton("Add");
+		setLayout(new FlowLayout());
+		setTitle("Employee Registration");
+		setSize(300,250);
+		Panel p1=new Panel();
+		p1.setLayout(new GridLayout(4,2,20,20));
+		p1.add(l1);p1.add(t1);
+		p1.add(l2);p1.add(t2);
+		p1.add(l3);p1.add(t3);
+		p1.add(l4);p1.add(t4);
+		add(p1);
+		add(btnAdd);
+		try
+		{
+			Class.forName("org.postgresql.Driver");
+			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db1","postgres","123");
+		}
+		catch(Exception e){
+		System.out.println(e);
+		}
+		
+		btnAdd.addActionListener(this);	
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}
+		public void actionPerformed(ActionEvent ae)
+		{
+			int no=Integer.parseInt(t1.getText());
+			String name=t2.getText();
+			String desg=t3.getText();
+			int sal=Integer.parseInt(t4.getText());
+			try{
+				PreparedStatement ps=con.prepareStatement("insert into employee values(?,?,?,?)");
+				ps.setInt(1,no);
+				ps.setString(2,name);
+				ps.setString(3,desg);
+				ps.setInt(4,sal);
+				int i=ps.executeUpdate();
+				JOptionPane.showMessageDialog(null,"Record Insertes Successfully");
+			}
+			catch(Exception e){}
+		}
+		public static void main(String []args)
+		{
+			new Slip1_2_JDBC();
+		}
+	}
+						
+		
+

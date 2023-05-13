@@ -1,0 +1,48 @@
+Q1.
+<body>
+<form action="rev.jsp">
+<!-- 1. Prompt for user input -->
+Enter Text : <input type="text" name="myText"/>
+<input type="submit" value="Submit Text"/>
+<br/>
+<%
+// 2. Perform the reverse on user entered string.
+String rev = "";
+String n = request.getParameter("myText"); // read user entered value in text box.
+if(n != null) { // if myText is entered
+int len = n.length();
+for (int i = len - 1; i >= 0; i--) {
+rev = rev + n.charAt(i);
+}
+// 3. Print the result string.
+out.println("Reverse of Given String is :");
+out.println("" + rev);
+}
+%>
+</form>
+</body>
+
+Q2.
+class Th1 extends Thread 
+{
+ 
+    public void run()
+ {
+        //System.out.println("Hello I am a Thread");
+
+    }
+ 
+}
+
+class TH
+{
+public static void main(String []arg)
+{
+Th1 t1=new Th1();
+t1.start();
+t1.setName("Thread_1");
+System.out.println("Name of current Thread: "+t1.getName());
+//System.out.println("current th"+Thread.currentThread());
+}
+
+}

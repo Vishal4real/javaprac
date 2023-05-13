@@ -1,0 +1,61 @@
+Q1.
+import java.util.*;
+public class TreesetDemoSetA3
+{
+	public static void main(String args[])
+	{
+		TreeSet<String>ts=new TreeSet<String>();
+		ts.add("Blue");
+		ts.add("Red");
+		ts.add("Greeeeeeeeen");
+		ts.add("Blue");
+		ts.add("Yellow");
+		ts.add("Cyan");
+		System.out.println("The Contents of Set are: "+ts);
+	}
+}		
+
+
+Q2.
+import java.sql.*;
+import java.util.*;
+public class Slip16_2
+{
+	public static void main(String[] args)
+	{
+		Scanner s=new Scanner(System.in);		
+		try
+		{
+			Class.forName("org.postgresql.Driver");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db1","postgres","123");
+
+			System.out.println("Enter how many records you want to insert: ");	
+			int n=s.nextInt();
+			for(int i=0;i<n;i++)
+			{
+				System.out.println("Enter the Teacher "+(i+1)+"details");
+				System.out.println("Enter Teacher id: ");
+				int tno=s.nextInt();
+				System.out.println("Enter Teacher name: ");		
+				String name=s.next();
+				System.out.println("Enter Teacher subject: ");		
+				String subject=s.next();
+				PreparedStatement ps=con.prepareStatement("insert into teacher values(?,?,?)");
+				ps.setInt(1,tno);
+				ps.setString(2,name);
+				ps.setString(3,subject);
+				ps.executeUpdate();
+			}
+				Statement t=con.createStatement();
+				ResultSet rs= t.executeQuery("select * from teacher where subject='JAVA'");
+				System.out.println("TeacherNumber	TeacherName	Subject");
+				while(rs.next())
+					System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3));
+		}
+		catch(Exception e){System.out.println(e);}
+	}
+}
+			
+				
+				
+				
